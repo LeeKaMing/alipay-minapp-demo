@@ -1,26 +1,41 @@
-.user-info {
-  display: flex;
-  flex-direction: row;
+.status-panel {
+  padding: 10px;
+  background: #fff;
+  margin-bottom: 10px;
+  font-size: 14px;
 }
 
-.user-info-name {
-  flex: 1;
+.status-panel view {
+  /* margin: 5px 0; */
+  line-height: 2;
+  color: #333333;
 }
 
-.user-info-avatar {
-  width: 120px;
-  height: 100px;
+.status-info {
+  margin: 10px 0;
+}
+
+.status-panel .user-info {
+  margin-top: 20px;
+}
+
+.status-panel .user-info-name {
   text-align: center;
 }
 
-.user-info-avatar image {
+.status-panel .user-info-avatar {
+  margin: 0 auto;
+  display: block;
+  width: 60px;
+  height: 60px;
   border-radius: 50%;
-  width: 100px;
-  height: 100px;
 }
 
-input {
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  margin-bottom: 5px;
+.btn-group {
+  margin: 10px;
 }
+
+.f-margin-bottom-0 {
+  margin-bottom: 0;
+}
+

@@ -1,20 +1,21 @@
-@import "./vendor/zanui.acss";
-
 .page-container {
-  padding: 50rpx;
   box-sizing: border-box;
+  background: #efefef;
 } 
 
-.page-title {
-  text-align: center;
-  font-size: 40rpx;
-  margin: 20rpx 0;
+button {
+  margin-bottom: 10px;
 }
 
-.tips {
-  color: #F41616;
-  font-size: 14px;
-  border-left: 2px solid #F41616;
-  padding: 5rpx 10rpx;
-  margin: 5rpx;
+.card {
+  margin: 10px;
+  padding: 10px;
+  border-radius: 4px;
+  background: #fff;
 }
+
+.card .card-title {
+  font-size: 16px;
+  line-height: 2;
+}
+

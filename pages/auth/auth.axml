@@ -1,24 +1,90 @@
 <view class="page-container">
-  <view class="user-info">
-    <view class="user-info-name">{{name}}</view>
-    <view class="user-info-avatar">
-      <image src="{{avatar}}" />
+  <view class="status-panel">
+    <view class="status-info">
+      <view>
+        <text>当前登录状态 : </text>
+        <text a:if="{{isUserLogined}}" style="color: green;">{{' 已登录'}}</text>
+        <text a:else style="color: red;">{{' 未登录'}}</text>
+      </view>
+      <view>
+        <text>支付宝账号绑定状态 : </text>
+        <text a:if="{{alipayLinkStatus == 0}}">{{' 未知'}}</text>
+        <text a:elif="{{alipayLinkStatus == 1}}" style="color: green;">{{' 已绑定'}}</text>
+        <text a:else style="color: red;">{{' 未绑定'}}</text>
+      </view>
     </view>
+    <block a:if="{{isUserLogined}}">
+      <view a:if="{{name && avatar}}" class="user-info">
+        <image class="user-info-avatar" src="{{avatar}}" />
+        <view class="user-info-name">{{name}}</view>
+      </view>
+      <button a:if="{{alipayLinkStatus == 0}}" type="primary" class="f-margin-bottom-0" onTap="getCurrentUser">获取当前用户对象</button>
+    </block>
+    <block a:if="{{alipayLinkStatus == -1}}">
+      <button type="primary" onTap="linkAlipay">关联支付宝账号（静默登录）</button>
+      <button type="primary" class="f-margin-bottom-0" onTap="linkAlipay" data-force-login>关联支付宝账号（强制登录）</button>
+    </block>
   </view>
-  <view class="page-title">通用登录注册</view>
-  <input type="text" placeholder="请输入注册用户名" onInput="bindRegisterName" />
-  <input type="text" placeholder="请输入注册密码" onInput="bindRegisterPassword" />
-  <button class="zan-btn zan-btn--primary" onTap="register">注册</button>
-  <input type="text" placeholder="请输入登录邮箱账号" onInput="bindLoginName" />
-  <input type="text" placeholder="请输入登录邮箱密码" onInput="bindLoginPassword" />
-  <button class="zan-btn zan-btn--primary" onTap="login">账号邮箱登录</button>
-  <button class="zan-btn zan-btn--primary" onTap="getCurrentUser">获取当前用户对象</button>
-  <button class="zan-btn zan-btn--primary" onTap="signout">登出</button>
-  <button class="zan-btn zan-btn--primary" onTap="resetPassword">忘记密码</button>
-  <button class="zan-btn zan-btn--primary" onTap="linkAlipay">关联支付宝账号（静默登录）</button>
-  <button class="zan-btn zan-btn--primary" onTap="linkAlipay" data-force-login>关联支付宝账号（强制登录）</button>
 
-  <view class="page-title">支付宝登录注册</view>
-  <button class="zan-btn zan-btn--primary" onTap="alipaySilentLogin">静默登录</button>
-  <button class="zan-btn zan-btn--primary" onTap="alipayForceLogin">强制登录</button>
+  <view class="card">
+    <text class="card-title">注册</text>
+    <input-item
+      data-field="name"
+      placeholder="请输入用户名"
+      type="text"
+      value="{{registerName}}"
+      clear="{{true}}"
+      onInput="bindRegisterName" 
+      onClear="onClear"
+    >
+      账号
+    </input-item>
+    <input-item
+      data-field="password"
+      value="{{registerPassword}}"
+      placeholder="请输入密码"
+      onInput="bindRegisterPassword"
+      password
+    >
+      密码
+    </input-item>
+    <button type="primary" class="f-margin-bottom-0" onTap="register">注册</button>
+  </view>
+
+  <view class="card">
+    <text class="card-title">登录</text>
+    <input-item
+      data-field="name"
+      placeholder="请输入用户名"
+      type="text"
+      value="{{loginName}}"
+      clear="{{true}}"
+      onInput="bindLoginName" 
+      onClear="onClear"
+    >
+      账号
+    </input-item>
+    <input-item
+      data-field="password"
+      value="{{loginPassword}}"
+      placeholder="请输入密码"
+      onInput="bindLoginPassword"
+      password
+    >
+      密码
+    </input-item>
+    <button type="primary" class="f-margin-bottom-0" onTap="login">账号邮箱登录</button>
+  </view>
+
+  <view class="card">
+    <text class="card-title">支付宝登录</text>
+    <button type="primary" onTap="alipaySilentLogin">静默登录</button>
+    <button type="primary" class="f-margin-bottom-0" onTap="alipayForceLogin">强制登录</button>
+  </view>
+
+  <view class="card">
+    <text class="card-title">登出与忘记密码</text>
+    <button type="primary" onTap="signout">登出</button>
+    <button type="primary" class="f-margin-bottom-0" onTap="resetPassword">忘记密码</button>
+  </view>
 </view>

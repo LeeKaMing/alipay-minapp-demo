@@ -8,6 +8,20 @@ Page({
     registerPassword: '',
     loginName: '',
     loginPassword: '',
+    isUserLogined: false,
+    alipayLinkStatus: 0,
+  },
+
+  onLoad() {
+    this.checkLoginStatus()
+  },
+
+  checkLoginStatus() {
+    const uid = my.BaaS.storage.get('uid')
+    const token = my.BaaS.storage.get('auth_token')
+    this.setData({
+      isUserLogined: uid && token,
+    })
   },
 
   cleanSession() {
@@ -48,6 +62,7 @@ Page({
       username: this.data.loginName,
       password: this.data.loginPassword,
     }).then((res) => {
+      this.checkLoginStatus()
       showSuccessToast()
     }, err => {
       showFailToast()
@@ -70,6 +85,12 @@ Page({
   signout() {
     app.BaaS.auth.logout().then((res) => {
       showSuccessToast()
+      this.checkLoginStatus()
+      this.setData({
+        name: '',
+        avatar: '',
+        alipayLinkStatus: 0,
+      })
     }, err => {
       showFailToast()
       console.log(err)
@@ -80,15 +101,15 @@ Page({
     app.BaaS.auth.getCurrentUser().then(user => {
       const userInfo = user.toJSON()
       console.log(userInfo)
-      if (typeof wx === 'undefined') {
+      if (!userInfo._provider.alipay) {
         this.setData({
-          name: userInfo._provider.alipay.nickname,
-          avatar: userInfo._provider.alipay.avatar,
+          alipayLinkStatus: -1,
         })
       } else {
         this.setData({
-          name: userInfo.nickName,
-          avatar: userInfo.avatarUrl,
+          name: userInfo._provider.alipay.nickname,
+          avatar: userInfo._provider.alipay.avatar,
+          alipayLinkStatus: 1,
         })
       }
     })
@@ -103,27 +124,10 @@ Page({
     })
   },
 
-  wxSilentLogin() {
-    this.cleanSession()
-    app.BaaS.auth.loginWithWechat().then((res) => {
-      showSuccessToast()
-    }, err => {
-      showFailToast()
-      console.log(err)
-    })
-  },
-
-  userInfoHandler(data) {
-    app.BaaS.auth.handleUserInfo(data).then(res => {
-      console.log('agree', res)
-    }, res => {
-      console.log('disagree', res)
-    })
-  },
-
   alipaySilentLogin() {
     this.cleanSession()
     app.BaaS.auth.loginWithAlipay().then((res) => {
+      this.checkLoginStatus()
       console.log(res, res.toJSON())
       showSuccessToast()
     }, err => {
@@ -135,6 +139,7 @@ Page({
   alipayForceLogin() {
     this.cleanSession()
     app.BaaS.auth.loginWithAlipay({forceLogin: true}).then((res) => {
+      this.checkLoginStatus()
       console.log(res, res.toJSON())
       showSuccessToast()
     }, err => {
@@ -150,29 +155,13 @@ Page({
     currentUser.linkAlipay({forceLogin})
       .then(res => {
         showSuccessToast()
+        this.setData({
+          alipayLinkStatus: 0,
+        })
       })
       .catch(err => {
         showFailToast()
         console.log(err)
-      })
-  },
-
-  wxSlientLoginConcurrentReq() {
-    this.cleanSession()
-    const jobs = new Array(10).fill(0).map((_, index) => {
-      return app.BaaS.auth.loginWithWechat().then(res => {
-        console.log('wx silent login: ', index)
-        return res
-      }).catch(err => err)
-    })
-    Promise.all(jobs)
-      .then(results => {
-        const isFailed = results.some(res => Error.prototype.isPrototypeOf(res))
-        if (isFailed) {
-          showFailToast()
-        } else {
-          showModal('请检查请求个数，只有一个请求为成功')
-        }
       })
   },
 })
