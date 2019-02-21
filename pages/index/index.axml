@@ -1,0 +1,19 @@
+<view>
+  <view class="page-title">SDK 测试应用</view>
+  <navigator class="zan-cell zan-cell--access" url="../auth/auth">
+    <view class="zan-cell__bd">登入&登出</view>
+    <view class="zan-cell__ft"></view>
+  </navigator>
+  <navigator class="zan-cell zan-cell--access" url="../schema-change/schema-change">
+    <view class="zan-cell__bd">schema 增删改测试</view>
+    <view class="zan-cell__ft"></view>
+  </navigator>
+  <navigator class="zan-cell zan-cell--access" url="../schema-query/schema-query">
+    <view class="zan-cell__bd">schema 查找测试</view>
+    <view class="zan-cell__ft"></view>
+  </navigator>
+  <navigator class="zan-cell zan-cell--access" url="../invoke-function/invoke-function">
+    <view class="zan-cell__bd">触发云函数</view>
+    <view class="zan-cell__ft"></view>
+  </navigator>
+</view>

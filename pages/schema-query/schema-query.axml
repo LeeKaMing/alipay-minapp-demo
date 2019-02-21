@@ -1,0 +1,105 @@
+<view class="page-container">
+  <view class="tips">重置数据</view>
+  <button class="zan-btn zan-btn--primary" onTap="handleResetData">重置</button>
+
+  <view class="tips">get 查询</view>
+  <button class="zan-btn zan-btn--primary" onTap="getAllProduct">获取所有产品(9)</button>
+  <block a:if="{{!records.length}}">
+    <button class="zan-btn zan-btn--primar zan-btn--disabled" disabled>获取一个产品</button>
+    <button class="zan-btn zan-btn--primary zan-btn--disabled" disabled>获取一个产品返回字段'str'</button>
+    <button class="zan-btn zan-btn--primary zan-btn--disabled" disabled>获取一个产品不返回字段'str, array_i'</button>
+  </block>
+  <block a:else>
+    <button class="zan-btn zan-btn--primary" onTap="getProduct">获取一个产品</button>
+    <button class="zan-btn zan-btn--primary" onTap="getProductBySelect_asc">获取一个产品返回字段'str'</button>
+    <button class="zan-btn zan-btn--primary" onTap="getProductBySelect_desc">获取一个产品不返回字段'str, array_i'</button>
+  </block>
+  <view class="tips">compare 查询</view>
+  <button class="zan-btn zan-btn--primary" onTap="compareQuery" data-type="=">compare 查询(int = 50)(1)</button>
+  <button class="zan-btn zan-btn--primary" onTap="compareQuery" data-type="!=">compare 查询(int != 50)(8)</button>
+  <button class="zan-btn zan-btn--primary" onTap="compareQuery" data-type=">">compare 查询(int > 50)(3)</button>
+  <button class="zan-btn zan-btn--primary" onTap="compareQuery" data-type=">=">compare 查询(int ≥ 50)(4)</button>
+  <button class="zan-btn zan-btn--primary" onTap="compareQuery" data-type="<">compare 查询(int ＜ 50)(4)</button>
+  <button class="zan-btn zan-btn--primary" onTap="compareQuery" data-type="<=">compare 查询(int ≤ 50)(5)</button>
+  <view class="tips">字符串查询</view>
+  <button class="zan-btn zan-btn--primary" onTap="containsQuery">字符串 contains 'm' 查询(2)</button>
+  <button class="zan-btn zan-btn--primary" onTap="regxQuery" data-type="str">字符串正则查询 - 字面量(2)</button>
+  <button class="zan-btn zan-btn--primary" onTap="regxQuery" data-type="func">字符串正则查询 - 构造函数(4)</button>
+  <view class="tips">数组查询</view>
+  <button class="zan-btn zan-btn--primary" onTap="inQuery">数组 in 查询(4)</button>
+  <button class="zan-btn zan-btn--primary" onTap="notInQuery">数组 notIn 查询(6)</button>
+  <button class="zan-btn zan-btn--primary" onTap="arrayContainsQuery">数组 arrayContains 查询(1)</button>
+  <button class="zan-btn zan-btn--primary" onTap="compareQuery_2">数组指定值查询(1)</button>
+  <view class="tips">null 查询</view>
+  <button class="zan-btn zan-btn--primary" onTap="nullQuery">null 查询(1)</button>
+  <button class="zan-btn zan-btn--primary" onTap="notNullQuery">not null 查询(8)</button>
+  <view class="tips">exists 查询</view>
+  <button class="zan-btn zan-btn--primary" onTap="existsQuery">exists 查询(9)</button>
+  <button class="zan-btn zan-btn--primary" onTap="notExistsQuery">notExists 查询(0)</button>
+  <view class="tips">多条件查询</view>
+  <button class="zan-btn zan-btn--primary" onTap="complexQueryProduct">多条件查询 and / or(5)</button>
+
+  <view class="tips">分页与排序</view>
+  <view class="query-contrl-panel">
+    <view style="font-size: 28rpx">order_by : </view>
+    <view class="sort-key-item" onTap="handleSelectSortKey" data-sort-key="num"><radio checked="{{sortKey==='num'}}" />num</view>
+    <view class="sort-key-item" onTap="handleSelectSortKey" data-sort-key="-num"><radio checked="{{sortKey==='-num'}}" />-num</view>
+    <view class="sort-key-item" onTap="handleSelectSortKey" data-sort-key="str"><radio checked="{{sortKey==='str'}}" />str</view>
+    <view class="sort-key-item" onTap="handleSelectSortKey" data-sort-key="-str"><radio checked="{{sortKey==='-str'}}" />-str</view>
+  </view>
+
+  <view class="query-contrl-panel">
+    <view style="font-size: 28rpx">limit : </view>
+    <view class="num-modify-btn-group">
+      <view class="num-modify-btn" onTap="handleModifyNum" data-num-type="limit" data-action-type="decrease">-</view>
+      <view class="num">{{limit}}</view>
+      <view class="num-modify-btn" onTap="handleModifyNum" data-num-type="limit" data-action-type="increase">+</view>
+    </view>
+  </view>
+
+  <view class="query-contrl-panel">
+    <view style="font-size: 28rpx">offset : </view>
+    <view class="num-modify-btn-group">
+      <view class="num-modify-btn" onTap="handleModifyNum" data-num-type="offset" data-action-type="decrease">-</view>
+      <view class="num">{{offset}}</view>
+      <view class="num-modify-btn" onTap="handleModifyNum" data-num-type="offset" data-action-type="increase">+</view>
+    </view>
+  </view>
+  <button class="zan-btn zan-btn--primary" onTap="getAllProductWithOptions">查找</button>
+
+  <scroll-view scroll-y class="file-list">
+    <view a:for="{{records}}" class="file-item">
+      <view class="file-name">num: {{item.num}}, str: {{item.str}}</view>
+    </view>
+  </scroll-view>
+
+
+  <!-- <button class="zan-btn zan-btn--primary" onTap="limitOffset" data-limit="3" data-offset="1">limit：3  offset：1</button> -->
+  <!-- <button class="zan-btn zan-btn--primary" onTap="limitOffset" data-limit="10" data-offset="0">limit：10  offset：0</button> -->
+  <!-- <button class="zan-btn zan-btn--primary" onTap="orderByQuery_desc">查询结果降序</button> -->
+  <!-- <button class="zan-btn zan-btn--primary" onTap="orderByQuery_asc">查询结果升序</button> -->
+  <view class="tips">字段过滤与扩展</view>
+  <button class="zan-btn zan-btn--primary" onTap="selectQuery">返回指定字段 [num]</button>
+  <button class="zan-btn zan-btn--primary" onTap="unselectQuery">不返回指定字段 [-array_s, -str, -file]</button>
+  <!-- <button class="zan-btn zan-btn--primary" onTap="selectGet">select get 返回特定字段</button> -->
+  <button class="zan-btn zan-btn--primary" onTap="expandCreated_by">expand created_by</button>
+  <button class="zan-btn zan-btn--primary" onTap="getAllProductWithExpand">获取所有产品(expand pointer)</button>
+  <block a:if="{{!records.length}}">
+    <button class="zan-btn zan-btn--primary zan-btn--disabled" disabled>tableObject get expand</button>
+  </block>
+  <block a:else>
+    <button class="zan-btn zan-btn--primary" onTap="getExpand">tableObject get expand</button>
+  </block>
+  <view class="tips">时间类型字段查询</view>
+  <button class="zan-btn zan-btn--primary" onTap="queryByTime1">created_at 查询</button>
+  <button class="zan-btn zan-btn--primary" onTap="queryByTime2">date 查询</button>
+  <view class="tips">hasKey 查询</view>
+  <button class="zan-btn zan-btn--primary" onTap="hasKey">hasKey "num" 查询 </button>
+  <view class="tips">count 查询</view>
+  <button class="zan-btn zan-btn--primary" onTap="countItem">count 查询</button>
+  <view class="tips">pointer 查询</view>
+  <button data-action="exist" class="zan-btn zan-btn--primary" onTap="pointerQuery">pointer 查询 exist</button>
+  <button data-action="compare" class="zan-btn zan-btn--primary" onTap="pointerQuery">pointer 查询 compare</button>
+  <button data-action="in" class="zan-btn zan-btn--primary" onTap="pointerQuery">pointer 查询 in</button>
+  <button data-action="notIn" class="zan-btn zan-btn--primary" onTap="pointerQuery">pointer 查询 not in</button>
+</view>

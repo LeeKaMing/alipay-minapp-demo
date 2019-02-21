@@ -1,0 +1,50 @@
+<view class="page-container">
+  <view class="page-title">Schema “增删改”测试</view>
+  <view class="section">
+    <view class="section-title">
+      <view a:if="{{record}}" class="tips">id : {{record.id}}</view>
+      <view a:else class="tips">请先创建一条记录，再进行下一步操作</view>
+    </view>
+    <button class="zan-btn zan-btn--primary" onTap="createRecordA">添加记录(整体 set)</button>
+    <button class="zan-btn zan-btn--primary" onTap="createRecordB">添加记录(单独 set)</button>
+    <button class="zan-btn zan-btn--primary {{!record ? 'zan-btn--disabled': ''}}" disabled="{{!record}}" onTap="deleteRecord" style="height: auto;">删除记录</button>
+  </view>
+  <view class="section">
+    <view class="section-title">更新字段 -- pointer</view>
+    <button class="zan-btn zan-btn--primary {{!record ? 'zan-btn--disabled': ''}}" disabled="{{!record}}" onTap="updatePointer">updatePointer</button>
+  </view>
+  <view class="section">
+    <view class="section-title">更新字段 -- int : {{record.int}}</view>
+    <button class="zan-btn zan-btn--primary {{!record ? 'zan-btn--disabled': ''}}" disabled="{{!record}}" onTap="updateRecord">int = 100</button>
+    <button class="zan-btn zan-btn--primary {{!record ? 'zan-btn--disabled': ''}}" disabled="{{!record}}" onTap="minusOne">int -= 1</button>
+    <button class="zan-btn zan-btn--primary {{!record ? 'zan-btn--disabled': ''}}" disabled="{{!record}}" onTap="plusOne">int += 1</button>
+  </view>
+  <view class="section">
+    <view class="section-title">更新字段 -- array_int : [{{record.array_i}}]</view>
+    <button class="zan-btn zan-btn--primary {{!record ? 'zan-btn--disabled': ''}}" disabled="{{!record}}" data-value="{{[123, 456]}}" onTap="addItem">add [123, 456]</button>
+    <button class="zan-btn zan-btn--primary {{!record ? 'zan-btn--disabled': ''}}" disabled="{{!record}}" data-value="{{123456}}" onTap="addItem">add 123456</button>
+    <block a:if="{{record && record.array_i.length > 1}}">
+      <button class="zan-btn zan-btn--primary" data-value="{{[record.array_i[0], record.array_i[1]]}}" onTap="removeItem">remove [{{record.array_i[0]}}, {{record.array_i[1]}}]</button>
+      <button class="zan-btn zan-btn--primary" data-value="{{record.array_i[0]}}" onTap="removeItem">remove {{record.array_i[0]}}</button>
+    </block>
+    <block a:elif="{{record && record.array_i.length === 1}}">
+      <button class="zan-btn zan-btn--disabled" disabled >remove [  ]</button>
+      <button class="zan-btn zan-btn--primary" data-value="{{record.array_i[0]}}" onTap="removeItem">remove {{record.array_i[0]}}</button>
+    </block>
+    <block a:else>
+      <button class="zan-btn zan-btn--disabled" disabled >remove [  ]</button>
+      <button class="zan-btn zan-btn--disabled" disabled >remove </button>
+    </block>
+  </view>
+
+  <view class="section">
+    <view class="section-title">更新字段 -- obj.num : {{record.obj.num}}</view>
+    <button class="zan-btn zan-btn--primary {{!record ? 'zan-btn--disabled': ''}}" disabled="{{!record}}" onTap="patchObject">patchObject</button>
+  </view>
+
+  <view class="section">
+    <view class="section-title">更新字段 -- unset</view>
+    <button class="zan-btn zan-btn--primary {{!record ? 'zan-btn--disabled': ''}}" disabled="{{!record}}" onTap="unset_1">unset obj</button>
+    <button class="zan-btn zan-btn--primary {{!record ? 'zan-btn--disabled': ''}}" disabled="{{!record}}" onTap="unset_2">unset str</button>
+  </view>
+</view>

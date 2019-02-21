@@ -1,0 +1,24 @@
+<view class="page-container">
+  <view class="user-info">
+    <view class="user-info-name">{{name}}</view>
+    <view class="user-info-avatar">
+      <image src="{{avatar}}" />
+    </view>
+  </view>
+  <view class="page-title">通用登录注册</view>
+  <input type="text" placeholder="请输入注册用户名" onInput="bindRegisterName" />
+  <input type="text" placeholder="请输入注册密码" onInput="bindRegisterPassword" />
+  <button class="zan-btn zan-btn--primary" onTap="register">注册</button>
+  <input type="text" placeholder="请输入登录邮箱账号" onInput="bindLoginName" />
+  <input type="text" placeholder="请输入登录邮箱密码" onInput="bindLoginPassword" />
+  <button class="zan-btn zan-btn--primary" onTap="login">账号邮箱登录</button>
+  <button class="zan-btn zan-btn--primary" onTap="getCurrentUser">获取当前用户对象</button>
+  <button class="zan-btn zan-btn--primary" onTap="signout">登出</button>
+  <button class="zan-btn zan-btn--primary" onTap="resetPassword">忘记密码</button>
+  <button class="zan-btn zan-btn--primary" onTap="linkAlipay">关联支付宝账号（静默登录）</button>
+  <button class="zan-btn zan-btn--primary" onTap="linkAlipay" data-force-login>关联支付宝账号（强制登录）</button>
+
+  <view class="page-title">支付宝登录注册</view>
+  <button class="zan-btn zan-btn--primary" onTap="alipaySilentLogin">静默登录</button>
+  <button class="zan-btn zan-btn--primary" onTap="alipayForceLogin">强制登录</button>
+</view>

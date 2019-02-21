@@ -1,0 +1,179 @@
+import {showSuccessToast, showFailToast, showModal} from '../../vendor/utils/index'
+const app = getApp()
+Page({
+  data: {
+    name: '',
+    avatar: '',
+    registerName: '',
+    registerPassword: '',
+    loginName: '',
+    loginPassword: '',
+  },
+
+  cleanSession() {
+    console.log('------- clean session start -------')
+    app.BaaS.storage.set('uid', '')
+    app.BaaS.storage.set('auth_token', '')
+    app.BaaS.storage.set('session_expires_at', '')
+    console.log('------- clean session end -------')
+  },
+
+  register() {
+    app.BaaS.auth.register({
+      username: this.data.registerName,
+      password: this.data.registerPassword,
+    }).then((res) => {
+      showSuccessToast()
+    }, err => {
+      showFailToast()
+      console.log(err)
+    })
+  },
+
+  bindRegisterName(e) {
+    this.setData({
+      registerName: e.detail.value,
+    })
+  },
+
+  bindRegisterPassword(e) {
+    this.setData({
+      registerPassword: e.detail.value,
+    })
+  },
+
+  login() {
+    this.cleanSession()
+    app.BaaS.auth.login({
+      username: this.data.loginName,
+      password: this.data.loginPassword,
+    }).then((res) => {
+      showSuccessToast()
+    }, err => {
+      showFailToast()
+      console.log(err)
+    })
+  },
+
+  bindLoginName(e) {
+    this.setData({
+      loginName: e.detail.value,
+    })
+  },
+
+  bindLoginPassword(e) {
+    this.setData({
+      loginPassword: e.detail.value,
+    })
+  },
+
+  signout() {
+    app.BaaS.auth.logout().then((res) => {
+      showSuccessToast()
+    }, err => {
+      showFailToast()
+      console.log(err)
+    })
+  },
+
+  getCurrentUser() {
+    app.BaaS.auth.getCurrentUser().then(user => {
+      const userInfo = user.toJSON()
+      console.log(userInfo)
+      if (typeof wx === 'undefined') {
+        this.setData({
+          name: userInfo._provider.alipay.nickname,
+          avatar: userInfo._provider.alipay.avatar,
+        })
+      } else {
+        this.setData({
+          name: userInfo.nickName,
+          avatar: userInfo.avatarUrl,
+        })
+      }
+    })
+  },
+
+  resetPassword() {
+    app.BaaS.auth.requestPasswordReset().then((res) => {
+      showSuccessToast()
+    }, err => {
+      showFailToast()
+      console.log(err)
+    })
+  },
+
+  wxSilentLogin() {
+    this.cleanSession()
+    app.BaaS.auth.loginWithWechat().then((res) => {
+      showSuccessToast()
+    }, err => {
+      showFailToast()
+      console.log(err)
+    })
+  },
+
+  userInfoHandler(data) {
+    app.BaaS.auth.handleUserInfo(data).then(res => {
+      console.log('agree', res)
+    }, res => {
+      console.log('disagree', res)
+    })
+  },
+
+  alipaySilentLogin() {
+    this.cleanSession()
+    app.BaaS.auth.loginWithAlipay().then((res) => {
+      console.log(res, res.toJSON())
+      showSuccessToast()
+    }, err => {
+      showFailToast()
+      console.log(err)
+    })
+  },
+
+  alipayForceLogin() {
+    this.cleanSession()
+    app.BaaS.auth.loginWithAlipay({forceLogin: true}).then((res) => {
+      console.log(res, res.toJSON())
+      showSuccessToast()
+    }, err => {
+      showFailToast()
+      console.log(err)
+    })
+  },
+
+  linkAlipay(e) {
+    const forceLogin = e.currentTarget.dataset.forceLogin
+    const User = new my.BaaS.User
+    const currentUser = User.getCurrentUserWithoutData()
+    currentUser.linkAlipay({forceLogin})
+      .then(res => {
+        showSuccessToast()
+      })
+      .catch(err => {
+        showFailToast()
+        console.log(err)
+      })
+  },
+
+  wxSlientLoginConcurrentReq() {
+    this.cleanSession()
+    const jobs = new Array(10).fill(0).map((_, index) => {
+      return app.BaaS.auth.loginWithWechat().then(res => {
+        console.log('wx silent login: ', index)
+        return res
+      }).catch(err => err)
+    })
+    Promise.all(jobs)
+      .then(results => {
+        const isFailed = results.some(res => Error.prototype.isPrototypeOf(res))
+        if (isFailed) {
+          showFailToast()
+        } else {
+          showModal('请检查请求个数，只有一个请求为成功')
+        }
+      })
+  },
+})
+

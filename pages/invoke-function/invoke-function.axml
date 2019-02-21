@@ -1,0 +1,4 @@
+<view class="page-container">
+  <button class="zan-btn zan-btn--primary" onTap="helloWorld">helloWorld</button>
+  <button class="zan-btn zan-btn--primary" onTap="testRequest">testRequest</button>
+</view>
