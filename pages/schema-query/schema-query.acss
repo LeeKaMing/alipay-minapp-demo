@@ -55,7 +55,7 @@
   height: 40rpx;
   line-height: 40rpx;
   text-align: center;
-  background: #4b0;
+  background: rgb(16, 142, 233);
   color: #fff;
   border-radius: 4px;
 }

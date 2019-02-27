@@ -1,4 +1,10 @@
 Page({
+  navigateToPage(e) {
+    const {url} = e.target.dataset
+    my.navigateTo({
+      url
+    })
+  },
   onLoad() {
     // 页面加载
   },

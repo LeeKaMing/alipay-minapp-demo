@@ -1,4 +1,31 @@
 <view class="page-container">
-  <button class="zan-btn zan-btn--primary" onTap="helloWorld">helloWorld</button>
-  <button class="zan-btn zan-btn--primary" onTap="testRequest">testRequest</button>
+  <view class="page-title">触发云函数</view>
+
+  <view class="card">
+    <text class="card-title">云函数：helloWorld</text>
+    <button type="primary" onTap="helloWorld" class="f-margin-bottom-0">helloWorld</button>
+  </view>
+
+  <view class="card">
+    <text class="card-title">云函数：计算三角形面积</text>
+    <input-item
+      data-field="length"
+      placeholder="请输入三角形底边长"
+      type="number"
+      value="{{length}}"
+      onInput="bindLengthChanged"
+    >
+      底边长
+    </input-item>
+    <input-item
+      data-field="height"
+      value="{{height}}"
+      type="number"
+      placeholder="请输入三角形的高"
+      onInput="bindHeightChanged"
+    >
+      高度
+    </input-item>
+    <button type="primary" class="f-margin-bottom-0" onTap="calculateArea">calculateArea</button>
+  </view>
 </view>

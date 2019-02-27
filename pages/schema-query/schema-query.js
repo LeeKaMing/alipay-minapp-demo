@@ -5,7 +5,7 @@ const app = getApp()
 let Product
 let pointer_ids = {}
 // 用于更新和原子操作测试
-let masterProductID
+// let masterProductID
 
 Page({
   data: {
@@ -16,6 +16,8 @@ Page({
   },
 
   onLoad() {
+    Product = new app.BaaS.TableObject('table_with_all_type')
+    // masterProductID = app.config.appName === 'sdk' ? '5b7ba570839c61291eeb258f' : '5b7ba570839c61291eeb258f'
     pointer_ids = getPointerIds()
   },
 
@@ -43,11 +45,6 @@ Page({
       }
       deleteRecord()
     })
-  },
-
-  onLoad() {
-    Product = new app.BaaS.TableObject('auto_maintable')
-    masterProductID = app.config.appName === 'sdk' ? '5b7ba570839c61291eeb258f' : '5b7ba570839c61291eeb258f'
   },
 
   handleResetData() {
@@ -86,10 +83,12 @@ Page({
   },
 
   getAllProductWithExpand() {
-    Product.expand(['pointer_userprofile', 'pointer_test_order']).find().then(res => {
+    Product.expand(['pointer_order']).find().then(res => {
       this.setData({
         records: res.data.objects,
       })
+      let result = `查询成功-总记录数为：${res.data.meta.total_count}`
+      showModal(result)
     }, err => {
       showFailToast()
     }).then(hideOwnLoading)
@@ -513,20 +512,21 @@ Page({
     let {action} = e.target.dataset
     let query = new app.BaaS.Query()
     if (action === 'exist') {
-      query.exists('pointer_test_order')
+      query.exists('pointer_order')
     } else if (action === 'compare') {
-      query.compare('pointer_test_order', '=', new app.BaaS.TableObject('pointer_test_order').getWithoutData(pointer_test_order_id))
-      query.compare('pointer_userprofile', '=', new app.BaaS.User().getWithoutData(pointer_ids.pointer_userprofile_id))
+      query.compare('pointer_order', '=', new app.BaaS.TableObject('order').getWithoutData(pointer_ids.pointer_order_id))
     } else if (action === 'in') {
-      let Order = new app.BaaS.TableObject('pointer_test_order')
-      query.in('pointer_test_order', [Order.getWithoutData(pointer_ids.pointer_test_order_id), Order.getWithoutData(pointer_ids.pointer_test_order_id2)])
+      let Order = new app.BaaS.TableObject('order')
+      query.in('pointer_order', [Order.getWithoutData(pointer_ids.pointer_order_id), Order.getWithoutData(pointer_ids.pointer_order_id2)])
     } else if (action === 'notIn') {
-      let Order = new app.BaaS.TableObject('pointer_test_order')
-      query.notIn('pointer_test_order', [Order.getWithoutData(pointer_ids.pointer_test_order_id), Order.getWithoutData('fakeid123')])
+      let Order = new app.BaaS.TableObject('order')
+      query.notIn('pointer_order', [Order.getWithoutData(pointer_ids.pointer_order_id), Order.getWithoutData('fakeid123')])
     }
 
     showOwnLoading()
-    Product.setQuery(query).expand('pointer_test_order').find().then(res => {
+    Product.setQuery(query).expand('pointer_order').find().then(res => {
+      let result = `查询成功-总记录数为：${res.data.meta.total_count}`
+      showModal(result)
       hideOwnLoading()
     }, err => {
       hideOwnLoading()

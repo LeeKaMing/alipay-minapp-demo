@@ -1,7 +1,16 @@
 .page-container {
   box-sizing: border-box;
   background: #efefef;
-} 
+  min-height: 100vh;
+}
+
+.page-title {
+  height: 100rpx;
+  line-height: 120rpx;
+  text-align: center;
+  font-size: 32rpx;
+  color: rgb(16, 142, 233);
+}
 
 button {
   margin-bottom: 10px;

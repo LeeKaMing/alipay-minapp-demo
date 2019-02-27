@@ -53,7 +53,7 @@ Page({
   },
 
   onLoad: function() {
-    Table = new app.BaaS.TableObject('auto_maintable')
+    Table = new app.BaaS.TableObject('table_with_all_type')
     pointer_ids = getPointerIds()
   },
 
@@ -103,14 +103,13 @@ Page({
       geo_polygon: valueGenerator.polygon(),
       geo_point: valueGenerator.point(),
       obj: object,
-      pointer_userprofile: new app.BaaS.User().getWithoutData(pointer_ids.pointer_userprofile_id),
-      pointer_test_order: new app.BaaS.TableObject('test_order').getWithoutData(pointer_ids.pointer_test_order_id),
+      pointer_order: new app.BaaS.TableObject('order').getWithoutData(pointer_ids.pointer_order_id),
       array_obj: [object, object],
       array_geo: [valueGenerator.point(), valueGenerator.polygon()],
       array_file: []
     }
     record.set(options)
-    record.set(options)  // bug: geo 类型的字段，set 两次后，值错误
+    record.set(options)
     record.save().then(res => {
       if (!this.checkRecordFieldsEql(options, res.data)) {
         throw new Error()
@@ -137,8 +136,7 @@ Page({
       geo_polygon: valueGenerator.polygon(),
       geo_point: valueGenerator.point(),
       obj: object,
-      pointer_userprofile: new app.BaaS.User().getWithoutData(pointer_ids.pointer_userprofile_id),
-      pointer_test_order: new app.BaaS.TableObject('test_order').getWithoutData(pointer_ids.pointer_test_order_id),
+      pointer_order: new app.BaaS.TableObject('order').getWithoutData(pointer_ids.pointer_order_id),
       array_obj: [object, object],
       array_geo: [valueGenerator.point(), valueGenerator.polygon()],
     }
@@ -154,12 +152,10 @@ Page({
     record.set('geo_point', options.geo_point)
     record.set('geo_polygon', options.geo_polygon)
     record.set('obj', options.obj)
-    record.set('pointer_userprofile', options.pointer_userprofile)
-    record.set('pointer_test_order', options.pointer_test_order)
+    record.set('pointer_order', options.pointer_order)
     record.set('array_obj', options.array_obj)
     record.set('array_geo', options.array_geo)
     record.set('array_file', options.array_file)
-    // record.set('file', res)
     record.set('array_file', [])
     record.save().then(res => {
       if (!this.checkRecordFieldsEql(options, res.data)) {
@@ -174,27 +170,6 @@ Page({
       showFailToast()
     })
   },
-
-  // chooseImage: function() {
-  //   return new Promise((resolve, reject) => {
-  //     my.chooseImage({
-  //       success: res => {
-  //         let File = new app.BaaS.File()
-  //         let fileParams = { filePath: res.tempFilePaths[0] }
-  //         my.showLoading({
-  //           title: '加载中...',
-  //           mask: true,
-  //         })
-  //         File.upload(fileParams).then((res) => {
-  //           let data = res.data.file
-  //           resolve(data)
-  //         }, (err) => {
-  //           reject(err)
-  //         })
-  //       }
-  //     })
-  //   })
-  // },
 
   deleteRecord: function() {
     Table.delete(this.data.record.id).then(res => {
@@ -367,19 +342,18 @@ Page({
   updatePointer() {
     // 获取一个 tableRecord 实例
     let User = new app.BaaS.User()
-    let Order = new app.BaaS.TableObject('test_order')
+    let Order = new app.BaaS.TableObject('order')
 
-    let user = User.getWithoutData(pointer_ids.pointer_userprofile_id2)
-    let order = Order.getWithoutData(pointer_ids.pointer_test_order_id2)
+    let order = Order.getWithoutData(pointer_ids.pointer_order_id2)
 
     // 创建一行数据
     let product = Table.getWithoutData(this.data.record.id)
 
     // 给 pointer 字段赋值
-    product.set('pointer_userprofile', user)
-    product.set('pointer_test_order', order)
+    product.set('pointer_order', order)
 
     product.update().then(res => {
+      showSuccessToast()
       console.log(res)
     })
 

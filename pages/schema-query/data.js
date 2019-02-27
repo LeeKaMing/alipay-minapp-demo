@@ -33,6 +33,7 @@ module.exports = [
     "str": "qziq5n",
     "boo": true,
     "date": "2018-09-01T11:07:38.737000+08:00",
+    "pointer_order": "5c7512eb31e07f0d0516c8b0",
   },
   {
     "array_b": [
