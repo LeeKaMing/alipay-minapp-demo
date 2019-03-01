@@ -72,10 +72,8 @@ Page({
         console.warn('暂时无法检测返回的 file 数据是否是用户设置的数据')
         return !!recordDataValue
       } else if (key.includes('pointer')) {
-        // TODO: 添加 pointer 字段验证规则
         return !!recordDataValue
       } else if (key == 'array_geo' || key == 'array_file' || key == 'array_obj') {
-        // return true
         return !!recordDataValue
       }
       return deepEql(optionValue, recordDataValue)
@@ -118,56 +116,6 @@ Page({
       this.setData({
         record: res.data
       })
-    })
-  },
-
-  createRecordB() {
-    let record = Table.create()
-    let options = {
-      str: valueGenerator.string(),
-      int: valueGenerator.integer(),
-      num: valueGenerator.number(),
-      boo: valueGenerator.boolean(),
-      array_i: valueGenerator.array_integer(),
-      array_n: valueGenerator.array_number(),
-      array_b: valueGenerator.array_boolean(),
-      array_s: valueGenerator.array_string(),
-      date: valueGenerator.date(),
-      geo_polygon: valueGenerator.polygon(),
-      geo_point: valueGenerator.point(),
-      obj: object,
-      pointer_order: new app.BaaS.TableObject('order').getWithoutData(pointer_ids.pointer_order_id),
-      array_obj: [object, object],
-      array_geo: [valueGenerator.point(), valueGenerator.polygon()],
-    }
-    record.set('str', options.str)
-    record.set('int', options.int)
-    record.set('num', options.num)
-    record.set('boo', options.boo)
-    record.set('array_i', options.array_i)
-    record.set('array_n', options.array_n)
-    record.set('array_b', options.array_b)
-    record.set('array_s', options.array_s)
-    record.set('date', options.date)
-    record.set('geo_point', options.geo_point)
-    record.set('geo_polygon', options.geo_polygon)
-    record.set('obj', options.obj)
-    record.set('pointer_order', options.pointer_order)
-    record.set('array_obj', options.array_obj)
-    record.set('array_geo', options.array_geo)
-    record.set('array_file', options.array_file)
-    record.set('array_file', [])
-    record.save().then(res => {
-      if (!this.checkRecordFieldsEql(options, res.data)) {
-        throw new Error()
-      }
-      showSuccessToast()
-      this.setData({
-        record: res.data
-      })
-    }).catch(err => {
-      console.log(err)
-      showFailToast()
     })
   },
 
@@ -293,7 +241,6 @@ Page({
     allType.set('col_date', date_v)
     allType.set('geojson_earth', polygon)
     allType.set('geojson_mars', point)
-    // table.set('col_file',file_v)
 
     allType.save().then(res => {
       showSuccessToast()

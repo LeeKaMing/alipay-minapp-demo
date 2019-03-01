@@ -1,12 +1,13 @@
 <view class="page-container">
-  <view class="page-title">触发云函数</view>
 
   <view class="card">
+    <image src="../../assets/images/hello.png" mode='widthFix' />
     <text class="card-title">云函数：helloWorld</text>
     <button type="primary" onTap="helloWorld" class="f-margin-bottom-0">helloWorld</button>
   </view>
 
   <view class="card">
+    <image src="../../assets/images/area.png" mode='widthFix' />
     <text class="card-title">云函数：计算三角形面积</text>
     <input-item
       data-field="length"

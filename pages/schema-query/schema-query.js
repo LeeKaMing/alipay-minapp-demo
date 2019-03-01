@@ -4,8 +4,6 @@ const app = getApp()
 
 let Product
 let pointer_ids = {}
-// 用于更新和原子操作测试
-// let masterProductID
 
 Page({
   data: {
@@ -17,7 +15,6 @@ Page({
 
   onLoad() {
     Product = new app.BaaS.TableObject('table_with_all_type')
-    // masterProductID = app.config.appName === 'sdk' ? '5b7ba570839c61291eeb258f' : '5b7ba570839c61291eeb258f'
     pointer_ids = getPointerIds()
   },
 
@@ -64,8 +61,7 @@ Page({
       this.setData({
         records: res.data.objects,
       })
-      let result = `查询成功-总记录数为：${res.data.meta.total_count}`
-      showModal(result)
+      showModal(JSON.stringify(res.data.objects))
     }, err => {
       showFailToast()
     }).then(hideOwnLoading)
@@ -87,8 +83,7 @@ Page({
       this.setData({
         records: res.data.objects,
       })
-      let result = `查询成功-总记录数为：${res.data.meta.total_count}`
-      showModal(result)
+      showModal(JSON.stringify(res.data.objects))
     }, err => {
       showFailToast()
     }).then(hideOwnLoading)
@@ -101,17 +96,17 @@ Page({
     })
   },
 
-  handleModifyNum(event) {
-    const numType = event.currentTarget.dataset.numType
-    const actionType = event.currentTarget.dataset.actionType
-
+  handleModifyLimit(event) {
     this.setData({
-      [numType]: actionType === 'increase'
-        ? this.data[numType] + 1
-        : this.data[numType] > 0 ? this.data[numType] - 1 : 0
+      limit: event,
     })
   },
 
+  handleModifyOffset(event) {
+    this.setData({
+      offset: event,
+    })
+  },
 
   getProduct: function () {
     const {records} = this.data
@@ -147,7 +142,6 @@ Page({
     showOwnLoading()
     Product.select(['-str', '-array_i']).get(records[0].id).then(res => {
       hideOwnLoading()
-      // let result = `All keys：[${JSON.stringify(Object.keys(res.data))}]`
       let result = `All keys：[${Object.keys(res.data)}]`
       showModal(result)
     }, err => {
@@ -163,8 +157,7 @@ Page({
     showOwnLoading()
     Product.setQuery(query).find().then(res => {
       hideOwnLoading()
-      let result = `查询成功-总记录数为：${res.data.meta.total_count}`
-      showModal(result)
+      showModal(JSON.stringify(res.data.objects))
     }, err => {
       hideOwnLoading()
       showFailToast()
@@ -177,8 +170,7 @@ Page({
     showOwnLoading()
     Product.setQuery(query).find().then(res => {
       hideOwnLoading()
-      let result = `查询成功-总记录数为：${res.data.meta.total_count}`
-      showModal(result)
+      showModal(JSON.stringify(res.data.objects))
     }, err => {
       hideOwnLoading()
       showFailToast()
@@ -193,8 +185,7 @@ Page({
     showOwnLoading()
     Product.setQuery(query).find().then(res => {
       hideOwnLoading()
-      let result = `查询成功-总记录数为：${res.data.meta.total_count}`
-      showModal(result)
+      showModal(JSON.stringify(res.data.objects))
     }, err => {
       hideOwnLoading()
       showFailToast()
@@ -207,8 +198,7 @@ Page({
     showOwnLoading()
     Product.setQuery(query).find().then(res => {
       hideOwnLoading()
-      let result = `查询成功-总记录数为：${res.data.meta.total_count}`
-      showModal(result)
+      showModal(JSON.stringify(res.data.objects))
     }, err => {
       hideOwnLoading()
       showFailToast()
@@ -221,8 +211,7 @@ Page({
     showOwnLoading()
     Product.setQuery(query).find().then(res => {
       hideOwnLoading()
-      let result = `查询成功-总记录数为：${res.data.meta.total_count}`
-      showModal(result)
+      showModal(JSON.stringify(res.data.objects))
     }, err => {
       hideOwnLoading()
       showFailToast()
@@ -235,23 +224,20 @@ Page({
     showOwnLoading()
     Product.setQuery(query).find().then(res => {
       hideOwnLoading()
-      let result = `查询成功-总记录数为：${res.data.meta.total_count}`
-      showModal(result)
+      showModal(JSON.stringify(res.data.objects))
     }, err => {
       hideOwnLoading()
       showFailToast()
     })
   },
 
-  // return 400
   compareQuery_2: function () {
     let query = new app.BaaS.Query()
     query.compare('array_s', '=', ['a', 'b', 'c', 'd'])
     showOwnLoading()
     Product.setQuery(query).find().then(res => {
       hideOwnLoading()
-      let result = `查询成功-总记录数为：${res.data.meta.total_count}`
-      showModal(result)
+      showModal(JSON.stringify(res.data.objects))
     }, err => {
       hideOwnLoading()
       showFailToast()
@@ -264,8 +250,7 @@ Page({
     showOwnLoading()
     Product.setQuery(query).find().then(res => {
       hideOwnLoading()
-      let result = `查询成功-总记录数为：${res.data.meta.total_count}`
-      showModal(result)
+      showModal(JSON.stringify(res.data.objects))
     }, err => {
       hideOwnLoading()
       showFailToast()
@@ -278,8 +263,7 @@ Page({
     showOwnLoading()
     Product.setQuery(query).find().then(res => {
       hideOwnLoading()
-      let result = `查询成功-总记录数为：${res.data.meta.total_count}`
-      showModal(result)
+      showModal(JSON.stringify(res.data.objects))
     }, err => {
       hideOwnLoading()
       showFailToast()
@@ -293,8 +277,7 @@ Page({
     showOwnLoading()
     Product.setQuery(query).find().then(res => {
       hideOwnLoading()
-      let result = `查询成功-总记录数为：${res.data.meta.total_count}`
-      showModal(result)
+      showModal(JSON.stringify(res.data.objects))
     }, err => {
       hideOwnLoading()
       showFailToast()
@@ -307,8 +290,7 @@ Page({
     showOwnLoading()
     Product.setQuery(query).find().then(res => {
       hideOwnLoading()
-      let result = `查询成功-总记录数为：${res.data.meta.total_count}`
-      showModal(result)
+      showModal(JSON.stringify(res.data.objects))
     }, err => {
       hideOwnLoading()
       showFailToast()
@@ -327,60 +309,12 @@ Page({
     showOwnLoading()
     Product.setQuery(orQuery).find().then(res => {
       hideOwnLoading()
-      let result = `查询成功-总记录数为：${res.data.meta.total_count}`
-      showModal(result)
+      showModal(JSON.stringify(res.data.objects))
     }, err => {
       hideOwnLoading()
       showFailToast()
     })
   },
-
-  // limitOffset: function (event) {
-  //   let {offset, limit} = event.currentTarget.dataset
-  //   offset = parseInt(offset)
-  //   limit = parseInt(limit)
-  //   showOwnLoading()
-  //   Product.limit(limit).offset(offset).find().then(res => {
-  //     hideOwnLoading()
-  //     let result = `查询成功-总记录数为：${res.data.objects.length}`
-  //     showModal(result)
-  //   }, err => {
-  //     hideOwnLoading()
-  //     showFailToast()
-  //   })
-  // },
-
-  // orderByQuery_desc: function () {
-  //   let query = new app.BaaS.Query()
-  //   query.compare('num', '<', 100)
-  //   // 方式一
-  //   // Product.setQuery(query).orderBy('-price').find().then(res => {
-  //   // 方式二
-  //   showOwnLoading()
-  //   Product.setQuery(query).orderBy(['-num']).find().then(res => {
-  //     hideOwnLoading()
-  //     showSuccessToast()
-  //   }, err => {
-  //     hideOwnLoading()
-  //     showFailToast()
-  //   })
-  // },
-
-  // orderByQuery_asc: function () {
-  //   let query = new app.BaaS.Query()
-  //   query.compare('num', '<', 100)
-  //   // 方式一
-  //   // Product.setQuery(query).orderBy('price').find().then(res => {
-  //   // 方式二
-  //   showOwnLoading()
-  //   Product.setQuery(query).orderBy(['num']).find().then(res => {
-  //     hideOwnLoading()
-  //     showSuccessToast()
-  //   }, err => {
-  //     hideOwnLoading()
-  //     showFailToast()
-  //   })
-  // },
 
   queryByTime1: function () {
     let query = new app.BaaS.Query()
@@ -391,8 +325,7 @@ Page({
     showOwnLoading()
     Product.setQuery(query).find().then(res => {
       hideOwnLoading()
-      let result = `查询成功-总记录数为：${res.data.meta.total_count}`
-      showModal(result)
+      showModal(JSON.stringify(res.data.objects))
       showSuccessToast()
     }, err => {
       hideOwnLoading()
@@ -405,16 +338,10 @@ Page({
 
     let timestamp = (new Date(2018, 0, 1)).setHours(0, 0, 0, 0)
     query.compare('date', '<=', (new Date(timestamp)).toISOString())
-
-    // let startTimestamp = new Date().setHours(0, 0, 0, 0)
-    // let endTimestamp = startTimestamp + 24 * 60 * 60 * 1000
-    // query.compare('duedate', '>=', (new Date(startTimestamp)).toISOString())
-    // query.compare('duedate', '<', (new Date(endTimestamp)).toISOString())
     showOwnLoading()
     Product.setQuery(query).find().then(res => {
       hideOwnLoading()
-      let result = `查询成功-总记录数为：${res.data.meta.total_count}`
-      showModal(result)
+      showModal(JSON.stringify(res.data.objects))
       showSuccessToast()
     }, err => {
       hideOwnLoading()
@@ -446,17 +373,6 @@ Page({
     })
   },
 
-  // selectGet: function () {
-  //   showOwnLoading()
-  //   Product.select(['-array_s']).get(masterProductID).then(res => {
-  //     hideOwnLoading()
-  //     showSuccessToast()
-  //   }, err => {
-  //     hideOwnLoading()
-  //     showFailToast()
-  //   })
-  // },
-
   expandCreated_by: function () {
     showOwnLoading()
     Product.expand('created_by').find().then(res => {
@@ -487,8 +403,7 @@ Page({
     showOwnLoading()
     Product.setQuery(query).find().then(res => {
       hideOwnLoading()
-      let result = `查询成功-总记录数为：${res.data.meta.total_count}`
-      showModal(result)
+      showModal(JSON.stringify(res.data.objects))
       showSuccessToast()
     }, err => {
       hideOwnLoading()
@@ -525,8 +440,7 @@ Page({
 
     showOwnLoading()
     Product.setQuery(query).expand('pointer_order').find().then(res => {
-      let result = `查询成功-总记录数为：${res.data.meta.total_count}`
-      showModal(result)
+      showModal(JSON.stringify(res.data.objects))
       hideOwnLoading()
     }, err => {
       hideOwnLoading()

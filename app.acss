@@ -2,6 +2,7 @@
   box-sizing: border-box;
   background: #efefef;
   min-height: 100vh;
+  overflow: hidden;
 }
 
 .page-title {
@@ -17,7 +18,7 @@ button {
 }
 
 .card {
-  margin: 10px;
+  margin: 15px 10px;
   padding: 10px;
   border-radius: 4px;
   background: #fff;
@@ -26,5 +27,13 @@ button {
 .card .card-title {
   font-size: 16px;
   line-height: 2;
+  display: block;
+}
+
+.card .card-comments {
+  font-size: 26rpx;
+  color: #666;
+  display: block;
+  margin-bottom: 10rpx;
 }
 

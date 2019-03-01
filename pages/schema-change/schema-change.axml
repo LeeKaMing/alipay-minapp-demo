@@ -1,11 +1,9 @@
 <view class="page-container">
-  <view class="page-title">Schema “增删改”测试</view>
 
   <view class="card">
     <text a:if="{{record}}" class="card-title">id : {{record.id}}</text>
     <text a:else class="card-title">请先创建一条记录，再进行下一步操作</text>
-    <button type="primary" onTap="createRecordA">添加记录(整体 set)</button>
-    <button type="primary" onTap="createRecordB">添加记录(单独 set)</button>
+    <button type="primary" onTap="createRecordA">添加记录</button>
     <button type="primary" disabled="{{!record}}" class="f-margin-bottom-0" onTap="deleteRecord">删除记录</button>
   </view>
 

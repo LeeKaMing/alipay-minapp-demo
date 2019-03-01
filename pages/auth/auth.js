@@ -32,6 +32,18 @@ Page({
     console.log('------- clean session end -------')
   },
 
+  getPhoneNumber() {
+    my.getPhoneNumber({
+      success: (res) => {
+        console.log('phone number===', res)
+      },
+      fail: (res) => {
+        console.log(res)
+        console.log('getPhoneNumber_fail')
+      },
+    })
+  },
+
   register() {
     app.BaaS.auth.register({
       username: this.data.registerName,

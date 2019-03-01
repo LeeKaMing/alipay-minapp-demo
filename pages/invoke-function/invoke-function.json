@@ -1,4 +1,5 @@
 {
+  "defaultTitle": "触发云函数",
   "usingComponents": {
     "card": "mini-antui/es/card/index",
     "list": "mini-antui/es/list/index",

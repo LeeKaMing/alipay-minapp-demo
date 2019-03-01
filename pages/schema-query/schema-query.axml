@@ -1,5 +1,5 @@
 <view class="page-container">
-  <view class="page-title">Schema 查找测试</view>
+  <!-- <view class="page-title">Schema 查找测试</view> -->
 
   <view class="card">
     <text class="card-title">重置数据</text>
@@ -8,7 +8,7 @@
 
   <view class="card">
     <text class="card-title">get 查询</text>
-    <button type="primary" onTap="getAllProduct">获取所有产品(9)</button>
+    <button type="primary" onTap="getAllProduct">获取所有产品</button>
     <block a:if="{{!records.length}}">
       <button type="primary" disabled>获取一个产品</button>
       <button type="primary" disabled>获取一个产品返回字段'str'</button>
@@ -23,44 +23,44 @@
 
   <view class="card">
     <text class="card-title">compare 查询</text>
-    <button type="primary" onTap="compareQuery" data-type="=">compare 查询(int = 50)(1)</button>
-    <button type="primary" onTap="compareQuery" data-type="!=">compare 查询(int != 50)(8)</button>
-    <button type="primary" onTap="compareQuery" data-type=">">compare 查询(int > 50)(3)</button>
-    <button type="primary" onTap="compareQuery" data-type=">=">compare 查询(int ≥ 50)(4)</button>
-    <button type="primary" onTap="compareQuery" data-type="<">compare 查询(int ＜ 50)(4)</button>
-    <button type="primary" class="f-margin-bottom-0" onTap="compareQuery" data-type="<=">compare 查询(int ≤ 50)(5)</button>
+    <button type="primary" onTap="compareQuery" data-type="=">compare 查询(int = 50)</button>
+    <button type="primary" onTap="compareQuery" data-type="!=">compare 查询(int != 50)</button>
+    <button type="primary" onTap="compareQuery" data-type=">">compare 查询(int > 50)</button>
+    <button type="primary" onTap="compareQuery" data-type=">=">compare 查询(int ≥ 50)</button>
+    <button type="primary" onTap="compareQuery" data-type="<">compare 查询(int ＜ 50)</button>
+    <button type="primary" class="f-margin-bottom-0" onTap="compareQuery" data-type="<=">compare 查询(int ≤ 50)</button>
   </view>
 
   <view class="card">
     <text class="card-title">字符串查询</text>
-    <button type="primary" onTap="containsQuery">字符串 contains 'm' 查询(2)</button>
-    <button type="primary" onTap="regxQuery" data-type="str">字符串正则查询 - 字面量(2)</button>
-    <button type="primary" class="f-margin-bottom-0" onTap="regxQuery" data-type="func">字符串正则查询 - 构造函数(4)</button>
+    <button type="primary" onTap="containsQuery">字符串 contains 'm' 查询</button>
+    <button type="primary" onTap="regxQuery" data-type="str">字符串正则查询 - 字面量</button>
+    <button type="primary" class="f-margin-bottom-0" onTap="regxQuery" data-type="func">字符串正则查询 - 构造函数</button>
   </view>
 
   <view class="card">
     <text class="card-title">数组查询</text>
-    <button type="primary" onTap="inQuery">数组 in 查询(4)</button>
-    <button type="primary" onTap="notInQuery">数组 notIn 查询(6)</button>
-    <button type="primary" onTap="arrayContainsQuery">数组 arrayContains 查询(1)</button>
-    <button type="primary" class="f-margin-bottom-0" onTap="compareQuery_2">数组指定值查询(1)</button>
+    <button type="primary" onTap="inQuery">数组 in 查询</button>
+    <button type="primary" onTap="notInQuery">数组 notIn 查询</button>
+    <button type="primary" onTap="arrayContainsQuery">数组 arrayContains 查询</button>
+    <button type="primary" class="f-margin-bottom-0" onTap="compareQuery_2">数组指定值查询</button>
   </view>
 
   <view class="card">
     <text class="card-title">null 查询</text>
-    <button type="primary" onTap="nullQuery">null 查询(1)</button>
-    <button type="primary" class="f-margin-bottom-0" onTap="notNullQuery">not null 查询(8)</button>
+    <button type="primary" onTap="nullQuery">null 查询</button>
+    <button type="primary" class="f-margin-bottom-0" onTap="notNullQuery">not null 查询</button>
   </view>
 
   <view class="card">
     <text class="card-title">exists 查询</text>
-    <button type="primary" onTap="existsQuery">exists 查询(9)</button>
-    <button type="primary" class="f-margin-bottom-0" onTap="notExistsQuery">notExists 查询(0)</button>
+    <button type="primary" onTap="existsQuery">exists 查询</button>
+    <button type="primary" class="f-margin-bottom-0" onTap="notExistsQuery">notExists 查询</button>
   </view>
 
   <view class="card">
     <text class="card-title">多条件查询</text>
-    <button type="primary" class="f-margin-bottom-0" onTap="complexQueryProduct">多条件查询 and / or(5)</button>
+    <button type="primary" class="f-margin-bottom-0" onTap="complexQueryProduct">多条件查询 and / or</button>
   </view>
 
   <view class="card">
@@ -76,20 +76,12 @@
 
     <view class="query-contrl-panel">
       <view style="font-size: 28rpx">limit : </view>
-      <view class="num-modify-btn-group">
-        <view class="num-modify-btn" onTap="handleModifyNum" data-num-type="limit" data-action-type="decrease">-</view>
-        <view class="num">{{limit}}</view>
-        <view class="num-modify-btn" onTap="handleModifyNum" data-num-type="limit" data-action-type="increase">+</view>
-      </view>
+      <stepper onChange="handleModifyLimit" step="{{1}}" showNumber value="{{limit}}" />
     </view>
 
     <view class="query-contrl-panel">
       <view style="font-size: 28rpx">offset : </view>
-      <view class="num-modify-btn-group">
-        <view class="num-modify-btn" onTap="handleModifyNum" data-num-type="offset" data-action-type="decrease">-</view>
-        <view class="num">{{offset}}</view>
-        <view class="num-modify-btn" onTap="handleModifyNum" data-num-type="offset" data-action-type="increase">+</view>
-      </view>
+      <stepper onChange="handleModifyOffset" step="{{1}}" showNumber value="{{offset}}" />
     </view>
 
     <button type="primary" onTap="getAllProductWithOptions">查找</button>

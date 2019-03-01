@@ -1,9 +1,10 @@
 <view>
-  <view class="page-title">SDK 测试应用</view>
+  <!-- <view class="page-title">SDK 测试应用</view> -->
+  <view class="banner">
+    <image src="../../assets/images/logo.png" mode="aspectFit" />
+    <text>知晓云 SDK 官方示例</text>
+  </view>
   <list>
-    <!-- <view slot='header'>
-      列表头部
-    </view> -->
     <list-item
       arrow='{{true}}'
       align='middle'
@@ -37,8 +38,5 @@
     >
       <view>触发云函数</view>
     </list-item>
-    <!-- <view slot="footer">
-      列表尾部
-    </view> -->
   </list>
 </view>

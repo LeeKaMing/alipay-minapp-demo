@@ -27,7 +27,23 @@
   </view>
 
   <view class="card">
+    <text class="card-title">获取手机号注册</text>
+    <button
+      type="primary"
+      open-type="getAuthorize"
+      scope='phoneNumber'
+    >获取手机号授权</button>
+    <button
+      type="primary"
+      class="f-margin-bottom-0"
+      onTap="getPhoneNumber"
+    >获取手机号登录</button>
+  </view>
+
+  <view class="card">
     <text class="card-title">注册</text>
+    <text class="card-comments">my.BaaS.auth.register({username, password})</text>
+    <text class="card-comments">用户通过支付宝登录后，可以设置邮箱或者用户名、密码，以便下次可以通过用户名或者邮箱登录。</text>
     <input-item
       data-field="name"
       placeholder="请输入用户名"
@@ -53,6 +69,8 @@
 
   <view class="card">
     <text class="card-title">登录</text>
+    <text class="card-comments">my.BaaS.auth.login({username, password})</text>
+    <text class="card-comments">使用账号密码登录</text>
     <input-item
       data-field="name"
       placeholder="请输入用户名"
@@ -78,6 +96,8 @@
 
   <view class="card">
     <text class="card-title">支付宝登录</text>
+    <text class="card-comments">my.BaaS.auth.loginWithAlipay({forceLogin: boolean})</text>
+    <text class="card-comments">支付宝一键登录</text>
     <button type="primary" onTap="alipaySilentLogin">静默登录</button>
     <button type="primary" class="f-margin-bottom-0" onTap="alipayForceLogin">强制登录</button>
   </view>
