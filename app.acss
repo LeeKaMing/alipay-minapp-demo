@@ -32,6 +32,7 @@ button {
 
 .card .card-comments {
   font-size: 26rpx;
+  line-height: 1.8;
   color: #666;
   display: block;
   margin-bottom: 10rpx;

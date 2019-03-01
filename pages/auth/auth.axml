@@ -28,8 +28,10 @@
 
   <view class="card">
     <text class="card-title">注册</text>
-    <text class="card-comments">my.BaaS.auth.register({username, password})</text>
-    <text class="card-comments">用户通过支付宝登录后，可以设置邮箱或者用户名、密码，以便下次可以通过用户名或者邮箱登录。</text>
+    <view class="card-comments">
+      <view>my.BaaS.auth.register({username, password})</view>
+      <view>通过邮箱（或用户名）和密码创建用户，之后可以在各个平台登录</view>
+    </view>
     <input-item
       data-field="name"
       placeholder="请输入用户名"
@@ -55,8 +57,10 @@
 
   <view class="card">
     <text class="card-title">登录</text>
-    <text class="card-comments">my.BaaS.auth.login({username, password})</text>
-    <text class="card-comments">使用账号密码登录</text>
+    <view class="card-comments">
+      <view>my.BaaS.auth.login({username, password})</view>
+      <view>使用用户名（或邮箱）和密码登录</view>
+    </view>
     <input-item
       data-field="name"
       placeholder="请输入用户名"
@@ -82,14 +86,16 @@
 
   <view class="card">
     <text class="card-title">支付宝登录</text>
-    <text class="card-comments">my.BaaS.auth.loginWithAlipay({forceLogin: boolean})</text>
-    <text class="card-comments">支付宝一键登录</text>
+    <view class="card-comments">
+      <view>my.BaaS.auth.loginWithAlipay({forceLogin: boolean})</view>
+      <view>支付宝一键登录</view>
+    </view>
     <button type="primary" onTap="alipaySilentLogin">静默登录</button>
     <button type="primary" class="f-margin-bottom-0" onTap="alipayForceLogin">强制登录</button>
   </view>
 
   <view class="card">
-    <text class="card-title">登出与忘记密码</text>
+    <text class="card-title">登出/忘记密码</text>
     <button type="primary" onTap="signout">登出</button>
     <button type="primary" class="f-margin-bottom-0" onTap="resetPassword">忘记密码</button>
   </view>

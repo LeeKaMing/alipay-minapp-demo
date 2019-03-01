@@ -6,7 +6,6 @@
 }
 
 .status-panel view {
-  /* margin: 5px 0; */
   line-height: 2;
   color: #333333;
 }
